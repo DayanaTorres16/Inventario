@@ -1,0 +1,102 @@
+.loginScreen {
+    display: flex;
+    flex-direction: row;
+    margin-top: 50px;
+}
+
+.leftLogin img {
+    height: 95vh;
+    width: 45vw;
+}
+
+.rightLogin {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: auto; 
+}
+
+.rightLogin h3 {
+    margin-bottom: 10px;
+    font-size: 30px;
+}
+
+.rightLogin p {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.googleButton {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    margin: auto;
+    margin-bottom: 35px;
+    background-color: #f5f2ed;
+    padding: 10px;
+    border: 1px;
+    border-radius: 15px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.googleLogo {
+    margin-left: 10px;
+    height: 35px;
+}
+
+label {
+    display: flex; /* Keep as flex to center */
+    color: grey;
+    font-size: 20px;
+}
+
+input {
+    height: 50px;
+    width: 450px;
+    transition: border-color 0.3s ease;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+    margin-top: 10px;
+}
+
+input:focus {
+    border: 2px solid #a9d5fe;
+}
+
+.formGroup {
+    margin-bottom: 40px;
+}
+
+.loginButton {
+    background-color: #eea6a8;
+    color: black;
+    padding: 10px;
+    border-radius: 15px;
+    font-size: 20px;
+    width: 400px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.loginButton:hover {
+    background-color: rgb(171, 147, 198);
+    color: white;
+}
+
+.forgotPassword {
+    font-size: 14px;
+    color: #555;
+    margin-top: 10px; /* Added for separation */
+}
+.errorMessage {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: center;
+  }
+  

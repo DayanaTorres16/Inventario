@@ -1,0 +1,27 @@
+.homeContainer{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 55px
+}
+.homeContainer img{
+  height: 95vh;
+}
+.home{
+  display: block;
+  align-content: center;
+  text-align: center;
+  margin: auto;
+}
+.home h1{
+  font-size: 80px;
+  color: #333841;
+  margin: 20px;
+}
+.home button{
+  height: 60px;
+  width: 200px;
+  border-radius: 10px;
+  font-size: 25px;
+  background-color: #eea6a8;
+  border-style: none;
+}

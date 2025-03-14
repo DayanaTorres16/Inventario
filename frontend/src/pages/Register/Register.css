@@ -1,0 +1,105 @@
+.containerRegister{
+    display: flex;
+    flex-direction: row;
+}
+.containerRegister img{
+    height: 90vh;
+    width: 40vw;
+}
+.formRegister{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: auto; 
+}
+.formRegister h3{
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-size: 30px;
+}
+.formRegister p{
+    font-size: 20px;
+    margin-bottom: 40px;
+    margin-top: 5px;
+}
+label{
+    color: grey;
+    font-size: 18px;
+    margin-top: 10px;
+}
+input{
+    height: 45px;
+    width: 500px;
+    transition: border-color 0.3s ease;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+    margin-top: 5px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center; 
+    text-align: center; 
+    gap: 10px;
+    max-width: 300px;
+    margin-top: 10px;
+    margin: auto;
+    font-family: Arial, sans-serif;
+    height: 100%; 
+}
+.container label{
+    margin-top: 15px;
+}
+
+.button-group {
+    display: flex;
+    margin-top: 5px;
+    color: black;
+}
+
+.btn {
+    flex: 1;
+    padding: 10px;
+    width: 200px;
+    font-size: 15px;
+    border: 2px solid #ccc;
+    background-color: rgb(255, 255, 255);
+    color: black;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.btn:first-child {
+    border-radius: 8px 0 0 8px;
+}
+.btn:last-child {
+    border-radius: 0 8px 8px 0;
+}
+.btn:hover {
+    background-color: #c72992;
+    color: white;
+}
+.active {
+    background-color: #d5affa;
+    color: black;
+    border-color: #ca9df7;
+}
+.role-text {
+    font-size: 15px;
+    color: gray;
+}
+.btnRegister{
+    background-color: #eea6a8;
+    color: black;
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 20px;
+    width: 400px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+    border: none;
+}

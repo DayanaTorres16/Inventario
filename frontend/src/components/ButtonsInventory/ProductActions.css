@@ -1,0 +1,16 @@
+.product-actions button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    margin: 5px;
+    cursor: pointer;
+    color: white;
+}
+
+.product-actions button{
+    background-color: #e98386;
+}
+.product-actions button:hover{
+    background-color: #a60006;
+}
+

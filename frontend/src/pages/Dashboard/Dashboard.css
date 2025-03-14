@@ -1,0 +1,16 @@
+.containerDashboard{
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    text-align: center;
+
+}
+.containerDashboard img{
+height: 95vh;
+}
+.containerDashboard h2{
+text-align: center;
+align-items: end;
+font-size: 35px;
+color: #3338419f;
+}
