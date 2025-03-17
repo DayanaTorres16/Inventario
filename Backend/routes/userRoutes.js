@@ -1,5 +1,5 @@
 const express = require('express');
-const bcrypt = require('bcrypt'); // Para encriptar la contraseña
+const bcrypt = require('bcrypt'); 
 const router = express.Router();
 const db = require('../db');
 
@@ -23,7 +23,6 @@ router.post('/register', async (req, res) => {
             return res.status(400).json({ error: 'Todos los campos son obligatorios' });
         }
 
-        // Verificar si el usuario ya existe en cualquiera de las tablas
         const [existingUser] = await db.query(
             'SELECT * FROM administrador WHERE EMAIL_ADMIN = ? UNION SELECT * FROM empleado WHERE EMAIL_EMPLEADO = ?',
             [email, email]
@@ -33,10 +32,8 @@ router.post('/register', async (req, res) => {
             return res.status(400).json({ error: 'El correo ya está registrado' });
         }
 
-        // Encriptar la contraseña antes de guardarla
         const hashedPassword = await bcrypt.hash(contraseña, 10);
 
-        // Insertar en la tabla correcta según el rol
         if (rol === 'administrador') {
             await db.query(
                 'INSERT INTO administrador (NOMBRE_ADMIN, APELLIDO_ADMIN, EMAIL_ADMIN, contraseña) VALUES (?, ?, ?, ?)',
@@ -95,7 +92,7 @@ router.put('/:id', async (req, res) => {
             }
         }
 
-        res.status(200).json({ message: 'Usuario actualizado correctamente' }); // Envía un JSON de éxito
+        res.status(200).json({ message: 'Usuario actualizado correctamente' }); 
     } catch (error) {
         console.error('Error al editar el usuario:', error);
         res.status(500).json({ error: 'Error al editar el usuario' });

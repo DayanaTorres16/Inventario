@@ -1,3 +1,4 @@
+
 .modal {
     position: fixed;
     top: 0;
@@ -58,4 +59,41 @@
 .modal button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
+}
+
+
+.modal-content input[type="checkbox"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #bd59e4;
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.modal-content ul{
+    list-style: none;
+}
+.modal-content input[type="checkbox"]:checked {
+    background-color: #a2c4f4;
+    border-color: #8dc1f8;
+}
+
+.modal-content input[type="checkbox"]:checked::after {
+    content: '✔';
+    color: white;
+    font-size: 12px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+}
+
+/* Cambio de color al pasar el mouse */
+.modal-content input[type="checkbox"]:hover {
+    border-color: #0056b3;
 }

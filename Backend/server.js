@@ -6,7 +6,7 @@ require('dotenv').config();
 const app = express();
 const PORT = 3000;
 
-// Importar los routers
+//Routes
 const userRoutes = require('./routes/userRoutes');
 const productRoutes = require('./routes/productRoutes'); // Cambiado a productRoutes
 const authRoutes = require('./routes/auth');
@@ -31,7 +31,6 @@ app.get('/usuarios', (req, res) => {
 
 app.use('/auth', authRoutes);
 
-// Usar los routers bajo los prefijos correspondientes
 app.use('/api/users', userRoutes);
 app.use('/', productRoutes); 
 

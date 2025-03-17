@@ -47,19 +47,19 @@ router.get("/productos", async (req, res) => {
         });
 
         const productosArray = Array.from(productosMap.values());
-        console.log("Datos de la API (enviando):", productosArray); // Agregar log antes de enviar la respuesta
+        console.log("Datos de la API (enviando):", productosArray); 
         res.json(productosArray);
     } catch (error) {
         console.error("Error al obtener productos:", error);
-        res.status(500).json({ error: "Error al obtener productos: " + error.message }); // Agregar mensaje de error detallado
+        res.status(500).json({ error: "Error al obtener productos: " + error.message }); 
     }
 });
 
 // Agregar un producto
 router.post("/productos", async (req, res) => {
     console.log("Datos recibidos:", req.body);
-    console.log("Tipo de dato de tiendaId:", typeof req.body.tiendaId); // Agregar log para el tipo de dato
-    console.log("Tienda ID recibido:", req.body.tiendaId); // Agregar log para el valor
+    console.log("Tipo de dato de tiendaId:", typeof req.body.tiendaId);
+    console.log("Tienda ID recibido:", req.body.tiendaId);
 
     const { nombre, descripcion, precio, stock, tiendaId, atributos } = req.body;
 
@@ -120,21 +120,65 @@ router.delete("/productos/:id", async (req, res) => {
     }
 });
 
-// Actualizar stock de un producto
-router.put("/productos/:id/stock", async (req, res) => {
+// Actualizar stock de un producto (general o atributos)
+router.put("/productos/:id", async (req, res) => {
     const { id } = req.params;
-    const { stock } = req.body;
+    const { stock, atributos } = req.body;
 
-    if (stock === undefined) {
-        return res.status(400).json({ error: "Stock es requerido" });
+    try {
+        if (stock !== undefined) {
+            await db.query("UPDATE producto SET CANT_DISPONIBLE = CANT_DISPONIBLE + ? WHERE ID_PRODUCTO = ?", [stock, id]);
+        }
+
+        if (atributos && atributos.length > 0) {
+            for (const attr of atributos) {
+                if (attr.ID_ATRIBUTO && attr.VALOR_ATRIBUTO && attr.CANTIDAD_STOCK !== undefined) {
+                    const valorAtributoNormalizado = attr.VALOR_ATRIBUTO.trim();
+
+                    console.log(` Actualizando stock -> ID_ATRIBUTO: ${attr.ID_ATRIBUTO}, Valor: ${valorAtributoNormalizado}, Nuevo Stock: ${attr.CANTIDAD_STOCK}`);
+
+                    const sql = `
+                        UPDATE producto_atributo 
+                        SET CANTIDAD_STOCK = CANTIDAD_STOCK + ? 
+                        WHERE ID_PRODUCTO = ? 
+                        AND ID_ATRIBUTO = ? 
+                        AND VALOR_ATRIBUTO = ?
+                    `;
+                    const values = [parseInt(attr.CANTIDAD_STOCK, 10) || 0, id, attr.ID_ATRIBUTO, valorAtributoNormalizado]; 
+                    const [result] = await db.query(sql, values);
+
+                    if (result.affectedRows === 0) {
+                        console.warn(`No se encontró el atributo con ID_ATRIBUTO: ${attr.ID_ATRIBUTO}, Valor: ${valorAtributoNormalizado}`);
+                    }
+                }
+            }
+        }
+
+        res.json({ message: "Producto actualizado correctamente" });
+    } catch (error) {
+        console.error("Error al actualizar producto:", error);
+        res.status(500).json({ error: "Error al actualizar producto" });
+    }
+});
+
+
+router.put("/productos/:id/info", async (req, res) => {
+    const { id } = req.params;
+    const { nombre, descripcion, precio } = req.body;
+
+    if (!nombre || !precio) {
+        return res.status(400).json({ error: "Faltan datos obligatorios" });
     }
 
     try {
-        await db.query("UPDATE producto SET CANT_DISPONIBLE = ? WHERE ID_PRODUCTO = ?", [stock, id]);
-        res.json({ message: "Stock actualizado correctamente" });
+        await db.query(
+            "UPDATE producto SET NOMBRE_PRODUCTO = ?, DESCRIPCION = ?, PRECIO_UNITARIO = ? WHERE ID_PRODUCTO = ?",
+            [nombre, descripcion, precio, id]
+        );
+        res.json({ message: "Información del producto actualizada correctamente" });
     } catch (error) {
-        console.error("Error al actualizar stock:", error);
-        res.status(500).json({ error: "Error al actualizar stock" });
+        console.error("Error al actualizar información del producto:", error);
+        res.status(500).json({ error: "Error al actualizar información del producto" });
     }
 });
 
@@ -186,7 +230,7 @@ router.get("/atributos", async (req, res) => {
 router.delete("/productos/:productoId/atributos/:valorAtributo", async (req, res) => {
     try {
         const { productoId, valorAtributo } = req.params;
-        const decodedValorAtributo = decodeURIComponent(valorAtributo); // Decodificar el valor del atributo
+        const decodedValorAtributo = decodeURIComponent(valorAtributo);
 
         console.log("Producto ID recibido:", productoId);
         console.log("Valor atributo recibido:", decodedValorAtributo);

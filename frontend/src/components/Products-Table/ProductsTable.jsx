@@ -1,10 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import './ProductsTable.css';
+import UpdateStockModal from "../Modals/UpdateStockModal"; // Importa el modal de actualización de stock
 
 const ProductsTable = ({ productos, onDelete, onDeleteAttribute, onOpenMenu, menuOpen, onCloseMenu }) => {
     const [confirmDelete, setConfirmDelete] = useState({ show: false, product: null });
     const [selectedAttribute, setSelectedAttribute] = useState(null);
     const menuRef = useRef(null);
+    const [updateModalOpen, setUpdateModalOpen] = useState(false);
+    const [productToUpdate, setProductToUpdate] = useState(null);
 
     const handleConfirmDelete = (product) => {
         setConfirmDelete({ show: true, product });
@@ -45,6 +48,21 @@ const ProductsTable = ({ productos, onDelete, onDeleteAttribute, onOpenMenu, men
             onCloseMenu();
             setSelectedAttribute(null);
         }
+    };
+
+    const handleUpdateClick = (product) => {
+        setProductToUpdate(product);
+        setUpdateModalOpen(true);
+    };
+
+    const handleUpdateClose = () => {
+        setUpdateModalOpen(false);
+        setProductToUpdate(null);
+    };
+
+    const handleUpdateStock = (updatedProduct) => {
+        setUpdateModalOpen(false);
+        setProductToUpdate(null);
     };
 
     return (
@@ -96,6 +114,7 @@ const ProductsTable = ({ productos, onDelete, onDeleteAttribute, onOpenMenu, men
                                 </td>
                                 <td>
                                     <button className="buttonDeleteTable" onClick={() => handleConfirmDelete(producto)}>Eliminar</button>
+                                    <button className="buttonUpdateTable" onClick={() => handleUpdateClick(producto)}>Actualizar</button>
                                 </td>
                             </tr>
                         ))
@@ -140,6 +159,12 @@ const ProductsTable = ({ productos, onDelete, onDeleteAttribute, onOpenMenu, men
                     </div>
                 </div>
             )}
+            <UpdateStockModal
+                isOpen={updateModalOpen}
+                onClose={handleUpdateClose}
+                onUpdate={handleUpdateStock}
+                product={productToUpdate}
+            />
         </div>
     );
 };
